@@ -195,8 +195,12 @@ Notes and Limitations
             if (locale) {
                 this._enqueue('setLocale', locale);
             }
+
+            // Handle the default state, and ensure that our book-keeping matches reality.
             if (defaultHidden) {
                 this.hide();
+            } else {
+                this.show();
             }
         }
     });

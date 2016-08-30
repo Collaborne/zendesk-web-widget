@@ -2,8 +2,6 @@ language: node_js
 sudo: false
 node_js:
 - stable
-addons:
-  firefox: 47.0.1
 cache:
   directories:
   - node_modules
@@ -13,7 +11,7 @@ before_script:
 - polylint
 - export PATH=$PWD/node_modules/.bin:$PATH
 script:
-- xvfb-run wct
+- "echo 'No tests yet'"
 after_success: '[ ${TRAVIS_PULL_REQUEST} = "false" ] && [ ${TRAVIS_BRANCH} = "master" ] && bower install -s https://${GH_TOKEN}@github.com/Collaborne/collaborne-build-tools.git && bower_components/collaborne-build-tools/gpages_build.sh Collaborne info@collaborne.com'
 env:
   secure: Kd2spbwW9NtrzY0m7YSu7zKY09Jh95kNglL2gvxCnBoau+ikxhvHhJeapgShySLg8/Q+nB2Ds8HxtemlZjAbOGlr06mvHHyWOg0UpG54x6jD24bSkzlzZMmExwtj/zRC89eD1/9kkfFHdVSELZHQyEbR3Qua9U+cOG39GJI5xlZpP5VvrfAtq0XUQ0B6vNVOf5lNulIkVZlQyFdaZbKXuxRY2dwt2gaU8VWFknuCQv2W34qm7/TNZ422RAs10qv0N+fYEFw7GLK7WjG+of4Ye7OxNyuoBSD7FZ3fyl8eB9kk5Ed9NRFC3VX68K1yz6ZC6zpwMuoNFXE/Q2tu8yCCzpoGdAJ7D7b0eFutz7K4FzRyPgIRQr830l2El+OFvJqgHrZ3dhfpsRmciDGKKQKoAWnvpRF9muJtzRXbVlvxOwQEueSAJc8wNRquKPGYvW/pTA5oUzJhLtChf3Et26rPIwZcwEla9nBck76CgG7s9uG2SvsRQscir0PUCzw2SRZWPY3PA64DqzFMBleQ78o5o6s5KzQ8obpVHZfM1FMrAXVZe0KOaYSsE/ldYzGRkbzucnJXVeX0ryrwHAS7yssYP35erIlm6sn5vr924K5+vf4fsDLTtAbP7vJw6Pk14Ri7ho7glEJ5BSGp8g6RM++iVIBKocnA1KxlXCp/0B212hE=

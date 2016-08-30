@@ -106,6 +106,7 @@ Notes and Limitations
              */
             _hidden: {
                 type: Boolean,
+                value: false
             },
 
             /**
@@ -207,7 +208,8 @@ Notes and Limitations
             }
 
             // Handle the default state, and ensure that our book-keeping matches reality.
-            if (defaultHidden) {
+            // NB: This accesses this._hidden rather than using a parameter so that the component doesn't reset itself for every visibility change.
+            if (defaultHidden || this._hidden) {
                 this.hide();
             } else {
                 this.show();

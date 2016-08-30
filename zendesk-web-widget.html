@@ -117,6 +117,16 @@ Notes and Limitations
             _attached: {
                 type: Boolean,
                 value: undefined
+            },
+
+            /**
+             * Internal user definition tracking the last call to `identify`.
+             */
+            _user: {
+                type: Object,
+                value: function() {
+                    return null;
+                }
             }
         },
 
@@ -149,6 +159,7 @@ Notes and Limitations
 
         identify: function(userObj) {
             this._enqueue('identify', userObj);
+            this._user = userObj;
         },
 
         hide: function() {
@@ -205,6 +216,12 @@ Notes and Limitations
 
             if (locale) {
                 this._enqueue('setLocale', locale);
+            }
+
+            // Apply a previous user.
+            // NB: This accesses this._user rather than using a parameter so that the component doesn't reset itself for every user change.
+            if (this._user) {
+                this.identify(this._user);
             }
 
             // Handle the default state, and ensure that our book-keeping matches reality.

@@ -106,6 +106,16 @@ Notes and Limitations
              */
             _hidden: {
                 type: Boolean,
+            },
+
+            /**
+             * Internal flag to indicate that we have seen the 'attached' event.
+             *
+             * This switches from 'undefined' to 'true', and never back.
+             */
+            _attached: {
+                type: Boolean,
+                value: undefined
             }
         },
 

@@ -111,7 +111,7 @@ Notes and Limitations
 
         observers: [
             '_updateUser(user, email, organization)',
-            '_reset(host, locale, defaultHidden)'
+            '_reset(host, locale, defaultHidden, _attached)'
         ],
 
         _createCommand: function(name, args) {
@@ -129,6 +129,11 @@ Notes and Limitations
                 const command = this._createCommand(name, args);
                 return zE(command);
             }
+        },
+
+        attached: function() {
+            // Trigger _reset, if we have all other values available.
+            this._attached = true;
         },
 
         identify: function(userObj) {
@@ -171,7 +176,7 @@ Notes and Limitations
             }
         },
 
-        _reset: function(host, locale, defaultHidden) {
+        _reset: function(host, locale, defaultHidden, attached) {
             // Remove all generated content first:
             // - the various IFRAMEs in <div> elements
             document.querySelectorAll('iframe[class^="zEWidget-"]').forEach(function(iframe) {

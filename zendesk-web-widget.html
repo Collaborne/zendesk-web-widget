@@ -201,7 +201,7 @@ Notes and Limitations
         _reset: function(host, locale, defaultHidden, attached) {
             // Remove all generated content first:
             // - the various IFRAMEs in <div> elements
-            document.querySelectorAll('iframe[class^="zEWidget-"]').forEach(function(iframe) {
+            Array.prototype.forEach.call(document.querySelectorAll('iframe[class^="zEWidget-"]'), function(iframe) {
                 const divWrapperElement = iframe.parentNode;
                 if (divWrapperElement.localName === 'div') {
                     // XXX: We could use divWrapperElement.remove() instead, but that is only supported on Edge/FF23/Chrome23+.

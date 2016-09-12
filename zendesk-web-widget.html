@@ -175,7 +175,7 @@ Notes and Limitations
         activate: function() {
             // Ignore 'activate' when the form is already active.
             // XXX: Is there a better way to check this?
-            if (document.querySelector('.zEWidget-helpCenterForm--active').length === 0) {
+            if (!document.querySelector('.zEWidget-helpCenterForm--active')) {
                 this._enqueue('activate');
             }
         },

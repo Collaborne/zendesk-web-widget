@@ -3,7 +3,7 @@
   "authors": [
     "collaborne"
   ],
-  "description": "A polymer-compatible wrapper for the Zendesk Web Widget (Polymer 1.x)",
+  "description": "A polymer-compatible wrapper for the Zendesk Web Widget (Polymer)",
   "main": "zendesk-web-widget.html",
   "keywords": [
     "web-components",
@@ -16,17 +16,15 @@
     "**/.*"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.0.0"
+    "polymer": "Polymer/polymer#^2.0.0"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "iron-test-helpers": "PolymerElements/iron-test-helpers#^1.0.0",
-    "test-fixture": "PolymerElements/test-fixture#^1.0.0",
+    "iron-component-page": "PolymerElements/iron-component-page#^2.0.0",
+    "iron-test-helpers": "PolymerElements/iron-test-helpers#^2.0.0",
     "web-component-tester": "*",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0",
-    "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.3.1",
-    "paper-input": "PolymerElements/paper-input#^1.1.17",
-    "paper-button": "PolymerElements/paper-button#^1.0.13",
-    "paper-toggle-button": "PolymerElements/paper-toggle-button#^1.2.0"
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.0",
+    "paper-input": "PolymerElements/paper-input#^2.0.0",
+    "paper-button": "PolymerElements/paper-button#^2.0.0",
+    "paper-toggle-button": "PolymerElements/paper-toggle-button#^2.0.0"
   }
 }

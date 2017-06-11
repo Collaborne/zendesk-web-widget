@@ -12,230 +12,230 @@ Notes and Limitations
 1. While the component is loaded the window.zE and window.zEmbed functions are defined, but should not be used.
 2. Changing the `host`, `locale`, or `defaultHidden` properties triggers are full recreation and reloading of the widget 
 
-@demo demo/zendesk-web-widget.html
+@demo demo/index.html
 -->
 <dom-module id="zendesk-web-widget">
-    <template>
-        <iframe id="loaderFrame" src="javascript:false" title="" role="presentation" hidden></iframe>
-    </template>
+	<template>
+		<iframe id="loaderFrame" src="javascript:false" title="" role="presentation" hidden></iframe>
+	</template>
 </dom-module>
 
 <script>
 (function() {
-    Polymer({
-        is: 'zendesk-web-widget',
+	Polymer({
+		is: 'zendesk-web-widget',
 
-        properties: {
-            /**
-             * The hostname for zendesk, typically <code>COMPANY.zendesk.com</code>.
-             */
-            host: {
-                type: String,
-                notify: true
-            },
+		properties: {
+			/**
+			 * The hostname for zendesk, typically <code>COMPANY.zendesk.com</code>.
+			 */
+			host: {
+				type: String,
+				notify: true
+			},
 
-            /**
-             * The locale to use for the widget.
-             *
-             * Must be one of the supported values (see <a href="https://support.zendesk.com/hc/en-us/articles/203761906">Zendesk's documentation</a> for a list)
-             */
-            locale: {
-                type: String,
-                value: '',
-                notify: true
-            },
+			/**
+			 * The locale to use for the widget.
+			 *
+			 * Must be one of the supported values (see <a href="https://support.zendesk.com/hc/en-us/articles/203761906">Zendesk's documentation</a> for a list)
+			 */
+			locale: {
+				type: String,
+				value: '',
+				notify: true
+			},
 
-            /**
-             * Current search text.
-             *
-             * This is used to update the context-sensitive help if the widget is configured to show it.
-             */
-            search: {
-                type: String,
-                observer: '_updateHelpCenterSearchSuggestions'
-            },
+			/**
+			 * Current search text.
+			 *
+			 * This is used to update the context-sensitive help if the widget is configured to show it.
+			 */
+			search: {
+				type: String,
+				observer: '_updateHelpCenterSearchSuggestions'
+			},
 
-            /**
-             * Current topic labels.
-             *
-             * This is used to update the context-sensitive help if the widget is configured to show it.
-             */
-            labels: {
-                type: String,
-                observer: '_updateHelpCenterLabelsSuggestions'
-            },
+			/**
+			 * Current topic labels.
+			 *
+			 * This is used to update the context-sensitive help if the widget is configured to show it.
+			 */
+			labels: {
+				type: String,
+				observer: '_updateHelpCenterLabelsSuggestions'
+			},
 
-            /**
-             * Name of the user.
-             *
-             * This is used to populate the 'Contact us' form.
-             */
-            user: {
-                type: String
-            },
-            /**
-             * Email address of the user.
-             *
-             * This is used to populate the 'Contact us' form.
-             */
-            email: {
-                type: String
-            },
-            /**
-             * Organization of the user.
-             *
-             * This is used to populate the 'Contact us' form.
-             */
-            organization: {
-                type: String
-            },
+			/**
+			 * Name of the user.
+			 *
+			 * This is used to populate the 'Contact us' form.
+			 */
+			user: {
+				type: String
+			},
+			/**
+			 * Email address of the user.
+			 *
+			 * This is used to populate the 'Contact us' form.
+			 */
+			email: {
+				type: String
+			},
+			/**
+			 * Organization of the user.
+			 *
+			 * This is used to populate the 'Contact us' form.
+			 */
+			organization: {
+				type: String
+			},
 
-            /**
-             * Whether the widget should be hidden by default.
-             *
-             * By default the widget will display automatically when it is loaded; if this property is set
-             * then the widget must be explicitly invoked using `activate`.
-             */
-            defaultHidden: {
-                type: Boolean,
-                value: false
-            },
+			/**
+			 * Whether the widget should be hidden by default.
+			 *
+			 * By default the widget will display automatically when it is loaded; if this property is set
+			 * then the widget must be explicitly invoked using `activate`.
+			 */
+			defaultHidden: {
+				type: Boolean,
+				value: false
+			},
 
-            /**
-             * Internal tracker whether we're currently showing or hiding the element
-             */
-            _hidden: {
-                type: Boolean,
-                value: false
-            },
+			/**
+			 * Internal tracker whether we're currently showing or hiding the element
+			 */
+			_hidden: {
+				type: Boolean,
+				value: false
+			},
 
-            /**
-             * Internal flag to indicate that we have seen the 'attached' event.
-             *
-             * This switches from 'undefined' to 'true', and never back.
-             */
-            _attached: {
-                type: Boolean,
-                value: undefined
-            },
+			/**
+			 * Internal flag to indicate that we have seen the 'attached' event.
+			 *
+			 * This switches from 'undefined' to 'true', and never back.
+			 */
+			_attached: {
+				type: Boolean,
+				value: undefined
+			},
 
-            /**
-             * Internal user definition tracking the last call to `identify`.
-             */
-            _user: {
-                type: Object,
-                value: function() {
-                    return null;
-                }
-            }
-        },
+			/**
+			 * Internal user definition tracking the last call to `identify`.
+			 */
+			_user: {
+				type: Object,
+				value: function() {
+					return null;
+				}
+			}
+		},
 
-        observers: [
-            '_updateUser(user, email, organization)',
-            '_reset(host, locale, defaultHidden, _attached)'
-        ],
+		observers: [
+			'_updateUser(user, email, organization)',
+			'_reset(host, locale, defaultHidden, _attached)'
+		],
 
-        _createCommand: function(name, args) {
-            return function() {
-                const commandFactory = window.zE[name];
-                commandFactory.apply(window.zE, args);
-            };
-        },
+		_createCommand: function(name, args) {
+			return function() {
+				const commandFactory = window.zE[name];
+				commandFactory.apply(window.zE, args);
+			};
+		},
 
-        _enqueue: function(name /*, arguments */) {
-            // Only enqueue the call when we have the component initialized.
-            // XXX: Ideally we should queue calls before that, but the component behaves a bit weirdly if the queue is non-empty at creation time.
-            if (typeof window.zE === 'function') {
-                const args = Array.prototype.slice.call(arguments, 1);
-                const command = this._createCommand(name, args);
-                return zE(command);
-            }
-        },
+		_enqueue: function(name /*, arguments */) {
+			// Only enqueue the call when we have the component initialized.
+			// XXX: Ideally we should queue calls before that, but the component behaves a bit weirdly if the queue is non-empty at creation time.
+			if (typeof window.zE === 'function') {
+				const args = Array.prototype.slice.call(arguments, 1);
+				const command = this._createCommand(name, args);
+				return zE(command);
+			}
+		},
 
-        attached: function() {
-            // Trigger _reset, if we have all other values available.
-            this._attached = true;
-        },
+		attached: function() {
+			// Trigger _reset, if we have all other values available.
+			this._attached = true;
+		},
 
-        identify: function(userObj) {
-            this._enqueue('identify', userObj);
-            this._user = userObj;
-        },
+		identify: function(userObj) {
+			this._enqueue('identify', userObj);
+			this._user = userObj;
+		},
 
-        hide: function() {
-            this._enqueue('hide');
-            this._hidden = true;
-        },
+		hide: function() {
+			this._enqueue('hide');
+			this._hidden = true;
+		},
 
-        show: function() {
-            this._enqueue('show');
-            this._hidden = false;
-        },
+		show: function() {
+			this._enqueue('show');
+			this._hidden = false;
+		},
 
-        activate: function() {
-            // Ignore 'activate' when the form is already active.
-            // XXX: Is there a better way to check this?
-            if (!document.querySelector('.zEWidget-helpCenterForm--active')) {
-                this._enqueue('activate');
-            }
-        },
+		activate: function() {
+			// Ignore 'activate' when the form is already active.
+			// XXX: Is there a better way to check this?
+			if (!document.querySelector('.zEWidget-helpCenterForm--active')) {
+				this._enqueue('activate');
+			}
+		},
 
-        setHelpCenterSuggestions: function(options) {
-            this._enqueue('setHelpCenterSuggestions', options);
-        },
+		setHelpCenterSuggestions: function(options) {
+			this._enqueue('setHelpCenterSuggestions', options);
+		},
 
-        toggle: function() {
-            this._hidden ? this.show() : this.hide();
-        },
+		toggle: function() {
+			this._hidden ? this.show() : this.hide();
+		},
 
-        _updateHelpCenterSearchSuggestions: function(search) {
-            this.setHelpCenterSuggestions({ search });
-        },
+		_updateHelpCenterSearchSuggestions: function(search) {
+			this.setHelpCenterSuggestions({ search });
+		},
 
-        _updateHelpCenterLabelsSuggestions: function(labels) {
-            this.setHelpCenterSuggestions({ labels });
-        },
+		_updateHelpCenterLabelsSuggestions: function(labels) {
+			this.setHelpCenterSuggestions({ labels });
+		},
 
-        _updateUser: function(name, email, organization) {
-            if (name || email || organization) {
-                this.identify({ name, email, organization });
-            }
-        },
+		_updateUser: function(name, email, organization) {
+			if (name || email || organization) {
+				this.identify({ name, email, organization });
+			}
+		},
 
-        _reset: function(host, locale, defaultHidden, attached) {
-            // Remove all generated content first:
-            // - the various IFRAMEs in <div> elements
-            Array.prototype.forEach.call(document.querySelectorAll('iframe[class^="zEWidget-"]'), function(iframe) {
-                const divWrapperElement = iframe.parentNode;
-                if (divWrapperElement.localName === 'div') {
-                    // XXX: We could use divWrapperElement.remove() instead, but that is only supported on Edge/FF23/Chrome23+.
-                    divWrapperElement.parentNode.removeChild(divWrapperElement);
-                }
-            });
-            window.zE = window.zEmbed = undefined;
+		_reset: function(host, locale, defaultHidden, attached) {
+			// Remove all generated content first:
+			// - the various IFRAMEs in <div> elements
+			Array.prototype.forEach.call(document.querySelectorAll('iframe[class^="zEWidget-"]'), function(iframe) {
+				const divWrapperElement = iframe.parentNode;
+				if (divWrapperElement.localName === 'div') {
+					// XXX: We could use divWrapperElement.remove() instead, but that is only supported on Edge/FF23/Chrome23+.
+					divWrapperElement.parentNode.removeChild(divWrapperElement);
+				}
+			});
+			window.zE = window.zEmbed = undefined;
 
-            // Initialize the widget from scratch.
-            // This is based on the code snippet from the admin panel, modified to use a pre-existing iframe.
-            (function(r,e,t){var n,o,d,i,s,a=[];window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,i=r.contentWindow,s=i.document;try{o=s}catch(e){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var o=this.createElement("script");n&&(this.domain=n),o.id="js-iframe-async",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write('<body onload="document._l();">'),o.close()})(this.$.loaderFrame, 'https://assets.zendesk.com/embeddable_framework/main.js', this.host);
+			// Initialize the widget from scratch.
+			// This is based on the code snippet from the admin panel, modified to use a pre-existing iframe.
+			(function(r,e,t){var n,o,d,i,s,a=[];window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,i=r.contentWindow,s=i.document;try{o=s}catch(e){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var o=this.createElement("script");n&&(this.domain=n),o.id="js-iframe-async",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write('<body onload="document._l();">'),o.close()})(this.$.loaderFrame, 'https://assets.zendesk.com/embeddable_framework/main.js', this.host);
 
-            if (locale) {
-                this._enqueue('setLocale', locale);
-            }
+			if (locale) {
+				this._enqueue('setLocale', locale);
+			}
 
-            // Apply a previous user.
-            // NB: This accesses this._user rather than using a parameter so that the component doesn't reset itself for every user change.
-            if (this._user) {
-                this.identify(this._user);
-            }
+			// Apply a previous user.
+			// NB: This accesses this._user rather than using a parameter so that the component doesn't reset itself for every user change.
+			if (this._user) {
+				this.identify(this._user);
+			}
 
-            // Handle the default state, and ensure that our book-keeping matches reality.
-            // NB: This accesses this._hidden rather than using a parameter so that the component doesn't reset itself for every visibility change.
-            if (defaultHidden || this._hidden) {
-                this.hide();
-            } else {
-                this.show();
-            }
-        }
-    });
+			// Handle the default state, and ensure that our book-keeping matches reality.
+			// NB: This accesses this._hidden rather than using a parameter so that the component doesn't reset itself for every visibility change.
+			if (defaultHidden || this._hidden) {
+				this.hide();
+			} else {
+				this.show();
+			}
+		}
+	});
 })();
 </script>

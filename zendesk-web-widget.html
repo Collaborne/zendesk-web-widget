@@ -152,8 +152,10 @@ Notes and Limitations
 			},
 
 			attached: function() {
-				// Trigger _reset, if we have all other values available.
-				this._attached = true;
+				// Wait until everything is laid out, and then trigger a _reset
+				Polymer.RenderStatus.beforeNextRender(this, () => {
+					this._attached = true;
+				});
 			},
 
 			identify: function(userObj) {

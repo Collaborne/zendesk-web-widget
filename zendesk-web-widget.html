@@ -202,6 +202,11 @@ Notes and Limitations
 			},
 
 			_reset: function(host, locale, defaultHidden, attached) {
+				// Handle Polymer 2.0 calling us with undefined values
+				if (!host || !locale || !defaultHidden || !attached) {
+					return;
+				}
+
 				// Remove all generated content first:
 				// - the various IFRAMEs in <div> elements
 				Array.prototype.forEach.call(document.querySelectorAll('iframe[class^="zEWidget-"]'), function(iframe) {

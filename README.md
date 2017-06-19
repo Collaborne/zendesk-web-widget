@@ -1,5 +1,3 @@
-_[Demo and API Docs](http://collaborne.github.io/zendesk-web-widget)_
-
 zendesk-web-widget [![Bower version](https://badge.fury.io/bo/zendesk-web-widget.svg)](http://badge.fury.io/bo/zendesk-web-widget) [![Travis state](https://travis-ci.org/Collaborne/zendesk-web-widget.svg?branch=master)](https://travis-ci.org/Collaborne/zendesk-web-widget)
 =========
 

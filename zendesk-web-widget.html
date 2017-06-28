@@ -198,7 +198,9 @@ Notes and Limitations
 			},
 
 			_updateUser: function(name, email, organization) {
-				if (name || email || organization) {
+				// Name and email are obligatory fields (organization is optional)
+				// @see https://developer.zendesk.com/embeddables/docs/widget/api#ze.identify
+				if (Boolean(name) && Boolean(email)) {
 					this.identify({ name, email, organization });
 				}
 			},
